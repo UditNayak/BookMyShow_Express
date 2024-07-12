@@ -1,7 +1,8 @@
 const express = require("express");
 const User = require("../models/userModel");
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middlewares/authMiddleWares");
 
 const router = express.Router();
 
@@ -34,24 +35,26 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
-  if(!user){
+  if (!user) {
     res.send({
       message: "User not found!",
       status: 404,
-      success: false
+      success: false,
     });
   }
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
-  if(!validPassword){
+  if (!validPassword) {
     res.send({
       message: "Invalid password!",
       status: 400,
-      success: false
+      success: false,
     });
   }
 
-  const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {expiresIn: '1d'});
+  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    expiresIn: "1d",
+  });
 
   res.send({
     message: "User logged in successfully!",
@@ -61,5 +64,21 @@ router.post("/login", async (req, res) => {
   });
 });
 
+router.get("/get-current-user", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId).select("-password");
+    res.send({
+      success: true,
+      message: "You are authorized to go to the protected route!",
+      data: user,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: "You are not authorized to go to the protected route!",
+      error: error,
+    });
+  }
+});
 
 module.exports = router;
