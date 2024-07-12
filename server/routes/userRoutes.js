@@ -5,25 +5,30 @@ const bcrypt = require('bcrypt')
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
-   try {
-    const userExist = await User.findOne({ email: req.body.email });
-    if(userExist) return res({
-      message: "User already exists!",
-      status: 400
-    });
+  try {
+    const userExists = await User.findOne({ email: req.body.email });
+
+    if (userExists) {
+      res.send({
+        success: false,
+        message: "User Already Exists",
+      });
+    }
 
     const salt = await bcrypt.genSalt(10);
-    console.log(salt);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     req.body.password = hashedPassword;
 
     const newUser = new User(req.body);
     await newUser.save();
-    res.status(201).json("User was registered successfully!");
-  } catch (error) {
-    return res.status(400).json({ error });
-  }
 
+    res.send({
+      success: true,
+      message: "Mubarak Hoo! Aapka Account Ban Gaya Hai!",
+    });
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 router.post("/login", async (req, res) => {
