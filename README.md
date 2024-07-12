@@ -16,3 +16,6 @@
 ![Token Details](./assets/tokenDetails.png)
 #### Token Details Matches to the Database Details
 ![Database Detail of Token](./assets/DatabaseDetailofToken.png)
+
+### User Authentication using Bearer Token
+![Bearer Token Authentication](./assets/BearerTokenAuthentication.png)
