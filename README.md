@@ -10,3 +10,9 @@
 ![Login Page](./assets/login.png)
 
 ## JWT Authentication
+#### Token Generation
+![JWT Taoken](./assets/jwtToken.png)
+#### Token Decryption
+![Token Details](./assets/tokenDetails.png)
+#### Token Details Matches to the Database Details
+![Database Detail of Token](./assets/DatabaseDetailofToken.png)
