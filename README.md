@@ -19,3 +19,9 @@
 
 ### User Authentication using Bearer Token
 ![Bearer Token Authentication](./assets/BearerTokenAuthentication.png)
+
+### Protected Routes
+When ever someone want to access the Home Page without Login, then this protected route will redirect the user to the login page.
+![No access to home page without Token present on the local storage](./protectedRouteWithoutToken.png)
+If the Token is present then it will allow the user to access the Home page.
+![Protected route on Home Page](./assets/homePageProtectedRoute.png)

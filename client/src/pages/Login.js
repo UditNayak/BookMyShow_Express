@@ -8,6 +8,15 @@ import {message} from 'antd'
 
 function Login() {
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (localStorage.getItem('token')) {
+  //     navigate('/');
+  //   }
+  // }
+  // , [navigate]);
+
+
   const onFinish = async (values)=>{
     console.log(values)
     try {
